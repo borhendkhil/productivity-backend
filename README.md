@@ -26,4 +26,8 @@ The Productivity Backend is a RESTful API built with Spring Boot that facilitate
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/productivity-backend.git
-)
+2.Navigate to the project directory:
+   ```bash
+   cd productivity-backend
+
+
