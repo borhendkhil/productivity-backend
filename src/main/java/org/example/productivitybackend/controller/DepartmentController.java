@@ -1,6 +1,8 @@
 package org.example.productivitybackend.controller;
 
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.example.productivitybackend.entity.Department;
 import org.example.productivitybackend.service.DepartmentService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/Department")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
+@Api(value = "Department",description = "Operations pertaining to Department")
 public class DepartmentController {
 
 
@@ -21,6 +24,7 @@ public class DepartmentController {
 
 
     @GetMapping("/departments")
+    @ApiOperation(value = "Get all departments")
     public Department getDepartments(@PathVariable String DepartmentId ) {
         return departmentService.getDepartmentById(DepartmentId);
     }
@@ -28,10 +32,12 @@ public class DepartmentController {
 
     @PostMapping("/createDepartment")
     @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation(value = "Create a new department")
     public void createDepartment(@RequestBody Department department) {
         departmentService.createDepartment(department);
     }
     @GetMapping("getAllDepartments")
+    @ApiOperation(value = "Get all departments")
     public void getAllDepartments() {
         departmentService.getAllDepartments();
     }
