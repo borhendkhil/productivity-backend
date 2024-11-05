@@ -1,9 +1,8 @@
 package org.example.productivitybackend.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
 import lombok.RequiredArgsConstructor;
-import org.example.productivitybackend.config.CustomUserDetails;
+
 import org.example.productivitybackend.entity.DTO.AuthResponse;
 import org.example.productivitybackend.entity.DTO.RegisterRequest;
 import org.example.productivitybackend.util.JwtUtil;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-@Api(value = "Authentication",description = "Operations pertaining to user authentication")
+
 public class AuthContorller  {
 
     @Autowired
@@ -33,7 +32,7 @@ public class AuthContorller  {
     private final UserService userService;
 
     @PostMapping("/signin")
-    @ApiOperation(value = "Sign in User" )
+
     public ResponseEntity<?> signIn(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
@@ -46,7 +45,7 @@ public class AuthContorller  {
 
 
     @PostMapping("/signup")
-    @ApiOperation(value = "Sign up a new user")
+
     public ResponseEntity<?> signUp(@RequestBody RegisterRequest userDto) {
         if (userService.existsByUsername(userDto.getUsername())) {
             return ResponseEntity.badRequest().body("Username is already taken!");
@@ -55,7 +54,7 @@ public class AuthContorller  {
         return ResponseEntity.ok("User registered successfully!");
     }
     @GetMapping("/getCurrentUser")
-    @ApiOperation(value = "Get the current authenticated user")
+
     public ResponseEntity<?> getCurrentUser() {
 
         return ResponseEntity.ok(userService.getCurrentUser());
