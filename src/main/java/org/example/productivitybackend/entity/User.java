@@ -19,7 +19,7 @@ import java.util.Date;
 
 public class User {
     @Id
-    private String Id;
+    private String id;
     private String status;
     private String password;
     private String email;

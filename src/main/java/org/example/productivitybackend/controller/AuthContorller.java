@@ -1,6 +1,7 @@
 package org.example.productivitybackend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.productivitybackend.config.CustomUserDetails;
 import org.example.productivitybackend.entity.DTO.AuthResponse;
 import org.example.productivitybackend.entity.DTO.RegisterRequest;
 import org.example.productivitybackend.util.JwtUtil;
@@ -12,14 +13,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AuthContorller  {
 
     @Autowired
@@ -33,7 +32,7 @@ public class AuthContorller  {
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -49,6 +48,11 @@ public class AuthContorller  {
         }
         userService.signUp(userDto);
         return ResponseEntity.ok("User registered successfully!");
+    }
+    @GetMapping("/getCurrentUser")
+    public ResponseEntity<?> getCurrentUser() {
+
+        return ResponseEntity.ok(userService.getCurrentUser());
     }
 }
 
