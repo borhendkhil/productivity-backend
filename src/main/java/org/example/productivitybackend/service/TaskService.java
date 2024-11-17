@@ -47,6 +47,19 @@ public class TaskService {
     public List<Task> getTasksByAssigneeId(String assigneeId) {
         return taskRepository.findByAssigneeId(assigneeId);
     }
+    public Task update(String taskId){
+        Optional<Task> taskOpt = taskRepository.findById(taskId);
+
+        if (taskOpt.isEmpty()) {
+            throw new IllegalArgumentException("Task not found with ID: " + taskId);
+        }
+
+        return taskRepository.save(taskOpt.get());
+    }
+    public void delete(String taskId){
+        taskRepository.deleteById(taskId);
+    }
+
 
 
 }
