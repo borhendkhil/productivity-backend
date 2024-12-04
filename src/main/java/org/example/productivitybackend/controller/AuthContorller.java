@@ -59,6 +59,10 @@ public class AuthContorller  {
 
         return ResponseEntity.ok(userService.getCurrentUser());
     }
+    @GetMapping("/getUsers")
+    public ResponseEntity<?> getUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
 }
 
 

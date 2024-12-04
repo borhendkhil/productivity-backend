@@ -28,12 +28,12 @@ public class TaskService {
         }
 
         Department department = departmentOpt.get();
-        List<String> departmentUsers = department.getUserIds();
+        //List<String> departmentUsers = department.getUserIds();
 
         // Ensure all assignees are members of the department
-        if (!departmentUsers.containsAll(task.getAssigneeId())) {
-            throw new IllegalArgumentException("One or more assignees are not members of the specified department.");
-        }
+        //if (!departmentUsers.containsAll(task.getAssigneeId())) {
+        //    throw new IllegalArgumentException("One or more assignees are not members of the specified department.");
+       // }
 
         // Set the creator's ID on the task
         task.setCreatorId(creatorId);

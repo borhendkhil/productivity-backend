@@ -3,12 +3,14 @@ package org.example.productivitybackend.service;
 import ch.qos.logback.core.joran.conditional.IfAction;
 import lombok.RequiredArgsConstructor;
 import org.example.productivitybackend.entity.Department;
+import org.example.productivitybackend.entity.User;
 import org.example.productivitybackend.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +54,12 @@ public class DepartmentService {
 
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
+    }
+
+    public String getUserIdsByDepartment(String departmentId) {
+        return departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Department not found with ID: " + departmentId))
+                .getUserIds().toString();
     }
 
 
