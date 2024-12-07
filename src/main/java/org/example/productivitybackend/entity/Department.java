@@ -15,10 +15,4 @@ public class Department {
     private List<String> userIds;
     private String mangerId;
     private String status;
-
-
-
-
-
-
 }

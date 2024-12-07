@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,10 +57,12 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
-    public String getUserIdsByDepartment(String departmentId) {
-        return departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Department not found with ID: " + departmentId))
-                .getUserIds().toString();
+    public List<String> getUsersByDepartment(String departmentId) {
+        Optional<Department> departmentOptional = departmentRepository.findById(departmentId);
+        if (departmentOptional.isPresent()) {
+            return departmentOptional.get().getUserIds();
+        }
+        return null; // You could throw an exception or return an empty list depending on your requirements.
     }
 
 

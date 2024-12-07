@@ -7,6 +7,8 @@ import org.example.productivitybackend.entity.Department;
 import org.example.productivitybackend.entity.User;
 import org.example.productivitybackend.service.DepartmentService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,9 +56,14 @@ public class DepartmentController {
     }
 
     @GetMapping("/getUsersbyDepartment")
-    public String getUsersbyDepartment(@RequestBody String DepartmentId) {
-        return departmentService.getUserIdsByDepartment(DepartmentId);
+    public ResponseEntity<List<String>> getUsersbyDepartment(@RequestBody String DepartmentId) {
+        List<String> users = departmentService.getUsersByDepartment(DepartmentId);
+         if (users != null) {
+             return ResponseEntity.ok(users);
+         }
+         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
 
 
 
