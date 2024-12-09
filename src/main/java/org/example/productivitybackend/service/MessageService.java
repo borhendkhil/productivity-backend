@@ -1,6 +1,7 @@
 package org.example.productivitybackend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.example.productivitybackend.entity.Message;
 import org.example.productivitybackend.entity.Room;
 import org.example.productivitybackend.entity.User;
@@ -18,6 +19,10 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
 
+    @Autowired
+    private final RoomService roomService;
+
+
 
 
     public Message sendMessage(User sender, Room room, String content) {
@@ -29,7 +34,8 @@ public class MessageService {
         return messageRepository.save(message); }
 
     public List<Message> fetchMessages(String roomId) {
-        return messageRepository.findByRoomId(roomId);
+        ObjectId roomObjectId = new ObjectId(roomId);
+        return messageRepository.findByRoom(roomObjectId);
     }
 
 

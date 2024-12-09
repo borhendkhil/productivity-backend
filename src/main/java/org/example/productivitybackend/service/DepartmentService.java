@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -57,16 +58,12 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
-    public List<String> getUsersByDepartment(String departmentId) {
-        Optional<Department> departmentOptional = departmentRepository.findById(departmentId);
-        if (departmentOptional.isPresent()) {
-            return departmentOptional.get().getUserIds();
-        }
-        return null; // You could throw an exception or return an empty list depending on your requirements.
+    public List<User> getUsersByDepartment(String id) {
+        return departmentRepository.findById(id)
+                .map(department -> department.getUserIds().stream()
+                        .map(userService::findByID)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList()); // Return empty list if department not found
     }
-
-
-
-
 
 }

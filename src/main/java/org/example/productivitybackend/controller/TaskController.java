@@ -8,6 +8,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.example.productivitybackend.service.TaskService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/task")
 @RequiredArgsConstructor
@@ -20,23 +22,30 @@ public class TaskController {
 
 
     @GetMapping("/tasks")
-    public void getTasksByAssigneeId(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public List<Task> getTasksByAssigneeId(@AuthenticationPrincipal CustomUserDetails userDetails) {
         String assigneeId = userDetails.getId();
-        taskService.getTasksByAssigneeId(assigneeId);
+        System.out.println("assigneeId: " + assigneeId);
+        return taskService.getTasksByAssigneeId(assigneeId);
     }
     @PostMapping("/createTask")
     public void createTask(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody Task task) {
         String creatorId = userDetails.getId();
         taskService.createTask(creatorId, task);
     }
-    @PutMapping("/updateTask")
-    public void updateTask(@RequestBody String taskId){
-        taskService.update(taskId);
+    @PutMapping("/updateTask/{taskId}")
+    public void updateTask(@PathVariable String taskId, @RequestBody Task task){
+        taskService.update(taskId, task);
     }
     @DeleteMapping("/deleteTask")
     public void deleteTask(@RequestBody String taskId){
         taskService.delete(taskId);
     }
+
+    @DeleteMapping("/deleteallTask")
+    public void deleteallTask(){
+        taskService.deletealltasks();
+    }
+
 
 
 }
